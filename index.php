@@ -1,6 +1,8 @@
-<?php
-	require_once "generic_init.php";
-?>
+<!DOCTYPE html>
+<html>
+	<?php
+		require_once "generic_init.php";
+	?>
 
 		<div id="div_progress" class="m-4">
 			<div class="container-fluid">
@@ -258,6 +260,7 @@
 			}
 		</script>
   
-<?php
-	require_once "generic_done.php";
-?>
+	<?php
+		require_once "generic_done.php";
+	?>
+</html>
