@@ -1,0 +1,8 @@
+$exif = exif_read_data('ToSort/' . $new_name, 'IFD0');
+			file_put_contents('ToSort/' . $new_name, 'Orice');
+			if($exif===false)
+				file_put_contents('ToSort/' . $new_name, 'No header file found');
+			else
+			{
+				file_put_contents('ToSort/' . $new_name, 'The file has headers');
+			}

@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.card-icon {
+	font-size: 14px !important;
+}
+
+.card-pf {
+	padding: 0 !important;
+	color: black;
+	text-shadow: 2px 2px 2px #dddddd;
+ }
+ 
+ .cards-pf .row-cards-pf:first-child {
+	padding-top: 0px !important;
+}
+
+.shadow {
+	box-shadow: 2px 2px 2px #dddddd;
+}
