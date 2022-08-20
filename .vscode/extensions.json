@@ -5,6 +5,9 @@
         "github.vscode-pull-request-github",
         "hediet.vscode-drawio",
         "ms-azuretools.vscode-docker",
-        "aaron-bond.better-comments"
+        "aaron-bond.better-comments",
+        "tyriar.luna-paint",
+        "heminei.pro-deployer",
+        "donjayamanne.jquerysnippets"
     ]
 }
