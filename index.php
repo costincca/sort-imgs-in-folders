@@ -1,5 +1,6 @@
 	<?php
 		require_once "generic_init.php";
+		require_once "globalfunctions.php";
 	?>
 
 		<!-- Return to the page for handling an action -->
@@ -71,16 +72,9 @@
 			
 			<br />
 				
-			<?php
-				function human_filesize($bytes, $decimals = 2)
-				{
-					$sz = 'BKMGTP';
-					$factor = floor((strlen($bytes) - 1) / 3);
-					return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . " " . @$sz[$factor];
-				}
-			
+			<?php			
 				$images_dirname = "ToSort/*";
-				$images = glob($images_dirname."*.{jpg,gif,png,jpeg}", GLOB_BRACE);
+				$images = glob($images_dirname . "*.{jpg,gif,png,jpeg}", GLOB_BRACE);
 			?>
 
 			<hr size=1>
@@ -127,37 +121,6 @@
 				</div>
 			</div>
 		</div>
-		
-		<style>
-			#drag_drop {
-				background-color : #f9f9f9;
-				border : #ccc 4px dashed;
-				line-height : 50px;
-				padding : 12px;
-				font-size : 16px;
-				text-align : center;
-				width: 100%;
-			}
-			
-			.file_font {
-				color: Red;
-			}
-			
-			.success {
-				background-color: #abe9cd;
-				background-image: linear-gradient(315deg, #abe9cd 0%, #3eadcf 74%);
-			}
-			
-			.error {
-				background-color: #f9c1b1;
-				background-image: linear-gradient(315deg, #f9c1b1 0%, #fb8085 74%);
-			}
-			
-			.title {
-				background-color: darkgreen;
-				background-image: linear-gradient(to right, darkgreen , green);
-			}
-		</style>
 
 		<script>
 			$(document).ready(function()
