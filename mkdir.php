@@ -4,6 +4,7 @@
 
 	if(isset($_POST['foldername']))
 	{
+		echo $_POST['foldername'];
 		$dirname = $_POST['foldername'];
 		
 		if (strpbrk($dirname, "\\/?%*:|\"<>") === FALSE) {
