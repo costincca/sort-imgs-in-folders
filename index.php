@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
 	<?php
 		require_once "generic_init.php";
 	?>
 
+		<!-- Return to the page for handling an action -->
+		<!-- ACTION Move to folder -->
 		<div id="div_progress" class="m-4">
 			<div class="container-fluid">
 				<div class="row mb-3">
@@ -23,7 +23,7 @@
 			<nav class="navbar sticky-top navbar-light bg-light">
 				<div class="container">
 					<?php
-						if (isset($_POST["selImages"]))
+						if(isset($_POST["selImages"]))
 						{
 							echo '<div class="alert alert-success border border-dark">';
 								echo "<b>" . count($_POST["selImages"]) . "</b> files will be copied/moved to <u>" . $_POST["selFolder"][0] . "</u><br />";
@@ -259,8 +259,6 @@
 				}
 			}
 		</script>
-  
 	<?php
 		require_once "generic_done.php";
 	?>
-</html>
