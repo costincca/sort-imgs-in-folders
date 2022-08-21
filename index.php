@@ -3,8 +3,6 @@
 		require_once "globalfunctions.php";
 	?>
 
-		<!-- Return to the page for handling an action -->
-		<!-- ACTION Move to folder -->
 		<div id="div_progress" class="m-4">
 			<div class="container-fluid">
 				<div class="row mb-3">
@@ -20,38 +18,69 @@
 			</div>
 		</div>
 
-		<form action="index.php" class="form-horizontal" method="post" id="main"></form>
-			<nav class="navbar sticky-top navbar-light bg-light">
-				<div class="container">
-					<?php
-						if(isset($_POST["selImages"]))
-						{
-							echo '<div class="alert alert-success border border-dark">';
-								echo "<b>" . count($_POST["selImages"]) . "</b> files will be copied/moved to <u>" . $_POST["selFolder"][0] . "</u><br />";
-								foreach ($_POST['selImages'] as $sImage)
+		<!-- Return to the page for handling an action -->
+		<!-- ACTION Move to folder -->
+
+		<nav class="navbar sticky-top navbar-light bg-light">
+			<div class="container justify-content-center">
+				<?php
+					if(isset($_POST["selImages"]))
+					{
+						echo '<div class="alert alert-success border border-dark">';
+							echo "<b>" . count($_POST["selImages"]) . "</b> file(s) will be copied/moved to <u>" . $_POST["selFolder"][0] . "</u><br />";
+							foreach ($_POST['selImages'] as $sImage)
+							{
+								$initialPath = realpath($sImage);
+								$finalPath = realpath($_POST["selFolder"][0]) . DIRECTORY_SEPARATOR . basename($sImage);
+								echo "...moving <b>" . basename($sImage) . "</b> to <u>" . $_POST["selFolder"][0] . "</u>... ";
+											
+								if(rename($initialPath, $finalPath))
 								{
-									$initialPath = realpath($sImage);
-									$finalPath = realpath($_POST["selFolder"][0]) . DIRECTORY_SEPARATOR . basename($sImage);
-									echo "<b>" . basename($sImage) . "</b> will be moved to <u>" . $_POST["selFolder"][0] . "</u>... ";
-												
-									if(rename($initialPath, $finalPath))
+									echo "<font color=green><b>Ok</b></font><br />";
+									
+									$comments = exif_read_data($finalPath, 'COMMENT', true);
+									if($comments) echo "<b>" . $comments["COMMENT"][0] . "</b>";
+								}
+								else
+								{
+									echo "<font color=red><b>Error</b></font><br />";
+								}
+							}
+						echo "</div>";
+					}
+				?>
+			</div>
+
+			<div class="container justify-content-center">
+				<?php
+					if(isset($_POST['foldername']))
+					{
+						echo '<div class="alert alert-success border border-dark">';
+							echo "Folder <b>" . $_POST['foldername'] . "</b> will be created<br />";
+							$dirname = $_POST['foldername'];
+							
+							if (strpbrk($dirname, "\\/?%*:|\"<>") === FALSE) {
+								if (!is_dir($dirname)) {
+									echo "...creating <b>" . $_POST["foldername"][0] . "</b>... ";
+									mkdir($dirname);
+									if(is_dir($dirname))
 									{
 										echo "<font color=green><b>Ok</b></font><br />";
-										
-										$comments = exif_read_data($finalPath, 'COMMENT', true);
-										if($comments) echo "<b>" . $comments["COMMENT"][0] . "</b>";
 									}
 									else
 									{
 										echo "<font color=red><b>Error</b></font><br />";
 									}
 								}
-							echo "</div>";
-						}
-					?>
-				</div>
-			</nav>
+							}
+						echo "</div>";
+					//echo 'success';
+					}
+				?>
+			</div>
+		</nav>
 
+		<form action="index.php" class="form-horizontal" method="post" id="main">
 			<nav class="navbar sticky-top navbar-light bg-light">
 				<h6 class="mt-3 mb-3 text-primary"><b>Move or Copy To Folder</b></h6>
 				<?php
@@ -120,7 +149,7 @@
 					?>
 				</div>
 			</div>
-		</div>
+		</form>
 
 		<script>
 			$(document).ready(function()
@@ -156,71 +185,6 @@
 				$cardsContainer.data('prevIndex', this.checked ? $cards.index($currentCard) : -1);
 			});
 
-		</script>
-
-		<script>
-			function _(element)
-			{
-				return document.getElementById(element);
-			}
-
-			_('div_progress').style.display = 'none';
-			//_('close_button').style.display = 'none';
-			_('action_result_notification').innerHTML = '';
-
-			var idInterval;
-			var intervalStart;
-			var intervalRemaining;
-			var intervalDecrease;
-			intervalStart = 4000; //miliseconds
-			intervalDecrease = 1000;
-
-			_('newfolder').onkeypress = function(event)
-			{
-				_('createfolderbtn').value = this.value;
-				return true;
-			}
-
-			_('createfolderbtn').onclick = function(event)
-			{
-				event.preventDefault();
-
-				_('div_progress').style.display = 'block';
-				
-				var form_data  = new FormData();
-				var error = '';
-
-				form_data.append("foldername", _('newfolder').value);
-
-				var ajax_request = new XMLHttpRequest();
-				ajax_request.open("post", "mkdir.php", true);
-				ajax_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-				ajax_request.addEventListener('load', function(event)
-				{
-					intervalRemaining = intervalStart;
-					_('action_result_notification').innerHTML = 'Success! Closes automatically in ' + Math.round(intervalRemaining/intervalDecrease, 0) + 's';
-					
-					idInterval = setInterval(closeDivProgress, intervalDecrease);
-				});
-				ajax_request.send(form_data);
-			}
-
-			function closeDivProgress()
-			{
-				if(intervalRemaining > 0)
-				{
-					_('action_result_notification').innerHTML = 'Success! Closes automatically in ' + Math.round(intervalRemaining/intervalDecrease, 0) + 's';
-					intervalRemaining -= intervalDecrease;
-				}
-				else
-				{
-					_('div_progress').style.display = 'none';
-					intervalRemaining = 0;
-					_('action_result_notification').innerHTML = '';
-					clearInterval(idInterval);
-				}
-			}
 		</script>
 	<?php
 		require_once "generic_done.php";
