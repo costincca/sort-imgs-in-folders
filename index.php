@@ -2,26 +2,9 @@
 		require_once "generic_init.php";
 		require_once "globalfunctions.php";
 	?>
-
-		<div id="div_progress" class="m-4">
-			<div class="container-fluid">
-				<div class="row mb-3">
-					<div class="col-sm-12">
-						<div class="card" id="result">
-							<div class="card-body">
-								<div id="action_result_notification" class="row justify-content-center"></div>
-								<button id="close_button" type="button" class="row mt-3 btn btn-primary border border-dark justify-content-center mx-auto" onclick="closeDivProgress();">Close notification</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<!-- Return to the page for handling an action -->
-		<!-- ACTION Move to folder -->
-
-		<nav class="navbar sticky-top navbar-light bg-light">
+		<nav class="navbar sticky-top navbar-light bg-light p-0 m-0">
+			<!-- ACTION Move to folder -->
 			<div class="container justify-content-center">
 				<?php
 					if(isset($_POST["selImages"]))
@@ -39,7 +22,7 @@
 									echo "<font color=green><b>Ok</b></font><br />";
 									
 									$comments = exif_read_data($finalPath, 'COMMENT', true);
-									if($comments) echo "<b>" . $comments["COMMENT"][0] . "</b>";
+									if($comments) echo "Comments: <b>" . $comments["COMMENT"][0] . "</b>";
 								}
 								else
 								{
@@ -51,6 +34,7 @@
 				?>
 			</div>
 
+			<!-- ACTION Create folder -->
 			<div class="container justify-content-center">
 				<?php
 					if(isset($_POST['foldername']))
@@ -59,11 +43,12 @@
 							echo "Folder <b>" . $_POST['foldername'] . "</b> will be created<br />";
 							$dirname = $_POST['foldername'];
 							
-							if (strpbrk($dirname, "\\/?%*:|\"<>") === FALSE) {
+							if (strpbrk($dirname, "\\/?%*:|\"<>") === FALSE)
+							{	
 								if (!is_dir($dirname)) {
-									echo "...creating <b>" . $_POST["foldername"][0] . "</b>... ";
-									mkdir($dirname);
-									if(is_dir($dirname))
+									echo "...creating <b>" . $_POST["foldername"] . "</b>... ";
+									mkdir("Sorted/" . $dirname);
+									if(is_dir("Sorted/" . $dirname))
 									{
 										echo "<font color=green><b>Ok</b></font><br />";
 									}
@@ -81,8 +66,8 @@
 		</nav>
 
 		<form action="index.php" class="form-horizontal" method="post" id="main">
-			<nav class="navbar sticky-top navbar-light bg-light">
-				<h6 class="mt-3 mb-3 text-primary"><b>Move or Copy To Folder</b></h6>
+			<nav class="navbar sticky-top navbar-light bg-light p-0 m-0">
+				<h6 class="mt-3 mb-3 ml-auto text-primary"><b>Move or Copy To Folder</b></h6>
 				<?php
 					$folders_dirname = "Sorted/*";
 					$folders = glob($folders_dirname, GLOB_ONLYDIR);
@@ -90,12 +75,12 @@
 					foreach($folders as $folder)
 					{
 						$cntfiles = count(array_diff( scandir($folder), array(".", "..") ));
-						echo '<button type="submit" class="btn btn-primary btn-sm m-2 shadow btn-grad" name="selFolder[]" form="main" value="' . $folder . '">' . basename($folder) . '</b> (' . $cntfiles . ')</button>';
+						echo '<button type="submit" class="btn btn-primary btn-sm m-2 shadow btn-grad ml-auto" name="selFolder[]" form="main" value="' . $folder . '">' . basename($folder) . '</b> (' . $cntfiles . ')</button>';
 					}
 				?>
 				<span style="float:right;">
 					<input type="text" class="m-2 shadow" id="newfolder" name="foldername" value="" form="main" placeholder="Folder Name">
-					<button type="submit" class="btn btn-success btn-sm m-2 shadow" id="createfolderbtn" form="main" name="selFolder[]" value="">Create Folder</button>
+					<button type="submit" class="btn btn-success btn-sm m-2 shadow btn-grad" id="createfolderbtn" form="main" name="selFolder[]" value="">Create Folder</button>
 				</span>
 			</nav>
 			
@@ -117,7 +102,7 @@
 							$info = pathinfo($image);
 							$ext = $info['extension'];
 					?>			
-							<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3">
+							<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
 								<div class="card border border-dark">
 									<div class="card-header">
 										<span><input type="checkbox" name="selImages[]" form="main" value="<?php echo $image; ?>"></span>
@@ -140,7 +125,7 @@
 											</div>
 										</div>
 										<p class="text-center"><strong>Size</strong> <?php echo human_filesize(filesize($image)); ?></p>
-										<p class="text-center"><strong>Hash</strong> <?php echo hash_file("md2",$image); ?></p>
+										<p class="text-center"><strong>Hash</strong> <?php echo hash_file("md2", $image); ?></p>
 									</div>
 								</div>
 							</div>
