@@ -4,6 +4,13 @@
 	font-size: 14px !important;
 }
 
+.row {
+	--bs-gutter-y: 1rem;
+}
+.card-header {
+	
+}
+
 .card-pf {
 	padding: 0 !important;
 	color: black;

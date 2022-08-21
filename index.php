@@ -67,7 +67,7 @@
 
 		<form action="index.php" class="form-horizontal" method="post" id="main">
 			<nav class="navbar sticky-top navbar-light bg-light p-0 m-0">
-				<h6 class="mt-3 mb-3 ml-auto text-primary"><b>Move or Copy To Folder</b></h6>
+				<h6 class="ms-2 me-2 mt-1 mb-1 mr-auto text-primary">Move or Copy To Folder</h6>
 				<?php
 					$folders_dirname = "Sorted/*";
 					$folders = glob($folders_dirname, GLOB_ONLYDIR);
@@ -75,26 +75,20 @@
 					foreach($folders as $folder)
 					{
 						$cntfiles = count(array_diff( scandir($folder), array(".", "..") ));
-						echo '<button type="submit" class="btn btn-primary btn-sm m-2 shadow btn-grad ml-auto" name="selFolder[]" form="main" value="' . $folder . '">' . basename($folder) . '</b> (' . $cntfiles . ')</button>';
+						echo '<button type="submit" class="btn btn-primary btn-sm m-1 shadow btn-grad me-2" name="selFolder[]" form="main" value="' . $folder . '">' . basename($folder) . '</b> (' . $cntfiles . ')</button>';
 					}
 				?>
-				<span style="float:right;">
-					<input type="text" class="m-2 shadow" id="newfolder" name="foldername" value="" form="main" placeholder="Folder Name">
-					<button type="submit" class="btn btn-success btn-sm m-2 shadow btn-grad" id="createfolderbtn" form="main" name="selFolder[]" value="">Create Folder</button>
-				</span>
+				<input type="text" class="m-2 ms-auto" id="newfolder" name="foldername" value="" form="main" placeholder="Folder Name">
+				<button type="submit" class="btn btn-success btn-sm m-2 shadow btn-grad" id="createfolderbtn" form="main" name="selFolder[]" value="">Create Folder</button>
 			</nav>
-			
-			<br />
 				
 			<?php			
 				$images_dirname = "ToSort/*";
 				$images = glob($images_dirname . "*.{jpg,gif,png,jpeg}", GLOB_BRACE);
 			?>
 
-			<hr size=1>
-
-			<h6 class="mt-3 mb-3 text-primary"><b>Files in Current Folder to Sort: <?php echo count($images) . " file(s)"; ?></b></h6>
-			<div class="container-fluid" id="card-container">
+			<h6 class="ms-2 me-2 mt-1 mb-1 mr-auto text-primary">Files in Current Folder to Sort: <b><?php echo count($images) . "</b> file(s)"; ?></h6>
+			<div class="container-fluid mt-3" id="card-container">
 				<div class="row">
 					<?php
 						foreach($images as $image)
@@ -104,28 +98,25 @@
 					?>			
 							<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
 								<div class="card border border-dark">
-									<div class="card-header">
-										<span><input type="checkbox" name="selImages[]" form="main" value="<?php echo $image; ?>"></span>
-										<span><?php echo mb_strimwidth(basename($image), 0, 15, "..."); ?></span>
-										
-										<div class="mt-1" style="float:right; font-size: 14px; color: green;">
-											<a href=# title="<?php echo basename($image); ?>"><span class="fas fa-info-circle" style="float:right; color: green;"></span></a>
-										</div>
+									<div class="card-header ps-3 p-1">
+										<input type="checkbox" name="selImages[]" form="main" value="<?php echo $image; ?>">
+										<span class="ms-2 fs-6"><?php echo mb_strimwidth(basename($image), 0, 15, "..."); ?></span>
+										<a href="#" class="me-auto" title="<?php echo "Filename: " . basename($image) . "\n" . "Extension: " . $ext . "\n" . "Filesize: " . human_filesize(filesize($image))  . "\n" . "Hash code: " . hash_file("md2", $image);?>"><span class="fas fa-info-circle"></span></a>
 									</div>
-									<div class="card-body m-2 p-0">
+									<div class="card-body m-1 p-0">
 										<div class="card-top">
 											<?php echo '<img src="' . $image . '" width="100%" alt="' . $image . '" />'; ?>
 										</div>
-										<div class="text-center">
+										<!--div class="text-center">
 											<div class="">
 												<span class=""><?php echo $ext; ?></span>
 											</div>
 											<div class="">
 												<span class="fas fa-info-circle"></span>
 											</div>
-										</div>
-										<p class="text-center"><strong>Size</strong> <?php echo human_filesize(filesize($image)); ?></p>
-										<p class="text-center"><strong>Hash</strong> <?php echo hash_file("md2", $image); ?></p>
+										</div-->
+										<!--p class="text-center"><strong>Size</strong> <?php echo human_filesize(filesize($image)); ?></p-->
+										<!--p class="text-center"><strong>Hash</strong> <?php echo hash_file("md2", $image); ?></p-->
 									</div>
 								</div>
 							</div>
