@@ -1,14 +1,54 @@
 	<?php
 		require_once "generic_init.php";
 		require_once "globalfunctions.php";
+		global $solved;
+		$solved = false;
+
+		echo "Solved: " . $solved;
+		echo "foldername: " . $_POST['ac'];
+		echo "selImages: " . $_POST['actag'];
 	?>
 		<!-- Return to the page for handling an action -->
-		<nav class="navbar sticky-top navbar-light bg-light p-0 m-0">
+		<nav class="navbar sticky-top navbar-light bg-light p-0 m-0 mt-3">
+			<!-- ACTION Create folder -->
+			<div class="container justify-content-center">
+				<?php
+					if(isset($_POST['foldername']) && (!$solved))
+					{
+						echo "Am intrat in foldername";
+						echo '<div class="alert alert-success border border-dark">';
+							echo "Folder <b>" . $_POST['foldername'] . "</b> will be created<br />";
+							$dirname = $_POST['foldername'];
+							
+							if (strpbrk($dirname, "\\/?%*:|\"<>") === FALSE)
+							{	
+								if (!is_dir($dirname)) {
+									echo "...creating folder <b>" . $_POST["foldername"] . "</b>... ";
+									mkdir("Sorted/" . $dirname);
+									if(is_dir("Sorted/" . $dirname))
+									{
+										echo "<font color=green><b>Ok</b></font><br />";
+									}
+									else
+									{
+										echo "<font color=red><b>Error</b></font><br />";
+									}
+								}
+							}
+						echo "</div>";
+						//echo 'success';
+
+						$solved = true;
+					}
+				?>
+			</div>
+
 			<!-- ACTION Move to folder -->
 			<div class="container justify-content-center">
 				<?php
-					if(isset($_POST["selImages"]))
+					if(isset($_POST["selImages"]) && (!$solved))
 					{
+						echo "Am intrat in move <input name='ac' id='actag' type='hidden' form='main' value='1'>";
 						echo '<div class="alert alert-success border border-dark">';
 							echo "<b>" . count($_POST["selImages"]) . "</b> file(s) will be copied/moved to <u>" . $_POST["selFolder"][0] . "</u><br />";
 							foreach ($_POST['selImages'] as $sImage)
@@ -30,36 +70,8 @@
 								}
 							}
 						echo "</div>";
-					}
-				?>
-			</div>
 
-			<!-- ACTION Create folder -->
-			<div class="container justify-content-center">
-				<?php
-					if(isset($_POST['foldername']))
-					{
-						echo '<div class="alert alert-success border border-dark">';
-							echo "Folder <b>" . $_POST['foldername'] . "</b> will be created<br />";
-							$dirname = $_POST['foldername'];
-							
-							if (strpbrk($dirname, "\\/?%*:|\"<>") === FALSE)
-							{	
-								if (!is_dir($dirname)) {
-									echo "...creating <b>" . $_POST["foldername"] . "</b>... ";
-									mkdir("Sorted/" . $dirname);
-									if(is_dir("Sorted/" . $dirname))
-									{
-										echo "<font color=green><b>Ok</b></font><br />";
-									}
-									else
-									{
-										echo "<font color=red><b>Error</b></font><br />";
-									}
-								}
-							}
-						echo "</div>";
-					//echo 'success';
+						$solved = true;
 					}
 				?>
 			</div>
@@ -100,21 +112,19 @@
 							<div class="col-xxs-6 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
 								<div class="card border border-dark">
 									<div class="card-header ps-2 p-1">
-										<input type="checkbox" name="selImages[]" form="main" value="<?php echo $imagename; ?>">
-										<span class="ms-2 fs-6"><a href="#" title="<?php echo "Filename: " . basename($image) . "\n" . "Extension: " . $imageext . "\n" . "Filesize: " . human_filesize(filesize($image))  . "\n" . "Hash code: " . hash_file("md2", $image);?>"><?php echo mb_strimwidth(basename($image), 0, 20, "..."); ?></a></span>
-										<!-- a href="#" class="me-auto" title="<?php echo "Filename: " . basename($image) . "\n" . "Extension: " . $ext . "\n" . "Filesize: " . human_filesize(filesize($image))  . "\n" . "Hash code: " . hash_file("md2", $image);?>"><span class="fas fa-info-circle"></span></a -->
+										<input type="checkbox" name="selImages[]" form="main" value="<?php echo $image; ?>" id="<?php echo $imagename; ?>">
+										<span class="ms-2 fs-6"><a href="#" title="<?php echo "Filename: " . $imagename . "\n" . "Extension: " . $imageext . "\n" . "Filesize: " . human_filesize(filesize($image))  . "\n" . "Hash code: " . hash_file("md2", $image);?>"><?php echo mb_strimwidth(basename($image), 0, 20, "..."); ?></a></span>
+										<!-- a href="#" class="me-auto" title="<?php echo "Filename: " . $imagename . "\n" . "Extension: " . $ext . "\n" . "Filesize: " . human_filesize(filesize($image))  . "\n" . "Hash code: " . hash_file("md2", $image);?>"><span class="fas fa-info-circle"></span></a -->
 									</div>
 									<div class="card-body m-1 p-0">
-										<div class="card-top">
+										<div class="card-top text-center">
 											<label for="<?php echo $imagename; ?>">
-												a
-												<?php echo '<img checkable="true" src="' . $image . '" width="100%" alt="' . $image . '" />'; ?>
+												<?php echo '<img src="' . $image . '"  width="100%" alt="' . $image . '" />'; ?>
 											</label>
-											<input type="checkbox" name="selImages[]" form="main" value="<?php echo $imagename; ?>">
 										</div>
 										<!--div class="text-center">
 											<div class="">
-												<span class=""><?php echo $ext; ?></span>
+												<span class=""><?php echo $imageext; ?></span>
 											</div>
 											<div class="">
 												<span class="fas fa-info-circle"></span>
