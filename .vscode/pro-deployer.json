@@ -20,17 +20,6 @@
 			"password": "XmAYZneSX",
 			"dir": "/public_html/costincca.ro/SortMemes",
 			"transferDataType": "binary"
-		},
-		{
-			"name": "My SFTP",
-			"type": "sftp",
-			"host": "localhost",
-			"port": 22,
-			"user": "admin",
-			"password": "123456",
-			"dir": "/",
-			"privateKey": null,
-			"passphrase": null
 		}
 	]
 }

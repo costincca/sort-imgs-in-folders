@@ -48,22 +48,10 @@
 
 		<link rel="stylesheet" href="index.css?v=21" type="text/css" />
 	</head>
-	<body>
-		<ul class="nav sticky-top navbar-light title justify-content-center">
-			<span class="navbar-brand text-white mr-auto ml-2 mr-2 small">Memesort</span>
-			<li class="nav-item">
-				<a class="nav-link text-white" href="upload.php">Upload</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link text-white" href="index.php">Sort</a>
-			</li>
-			<li class="nav-item d-none">
-				<a class="nav-link text-white" href="login.php">Login</a>
-			</li>
-			<li class="nav-item d-none">
-				<a class="nav-link text-white" href="settings.php">Settings</a>
-			</li>
-			<li class="nav-item d-none">
-				<a class="nav-link text-white" href="logout.php">Logout</a>
-			</li>
-		</ul>
+	<body class="position-relative">
+		<nav class="nav sticky-top navbar-light title justify-content-center">
+			<a class="btn btn-success border-white btn-sm m-2 shadow btn-grad text-white me-auto" nohref>MemeSort</a>
+
+			<a class="ms-auto btn btn-info btn-sm m-2 shadow btn-grad text-black" href="upload.php">Upload</a>
+			<a class="btn btn-warning btn-sm m-2 shadow text-black" href="index.php">Sort</a>
+		</nav>

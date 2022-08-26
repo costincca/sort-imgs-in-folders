@@ -1,8 +1,8 @@
-		<ul class="nav fixed-bottom navbar-light title justify-content-center">
-			<li class="nav-item text-white small">
-				@<?php echo date("Y"); ?> costincca.ro &ndash; All Right Reserved
+		<nav class="nav footer position=absolute title justify-content-center mt-2">
+			<li class="nav-item text-white small m-1 ms-auto me-1">
+				<span class="deepshadow">@<?php echo date("Y"); ?> costincca.ro &ndash; All Rights Reserved</span>
 			</li>
-		</ul>	
+		</nav>	
 		
 		<!-- https://www.osano.com/cookieconsent/download/ -->
 		<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
