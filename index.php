@@ -74,8 +74,8 @@
 								{
 									echo "<font color=green><b>Ok</b></font><br />";
 									
-									$comments = exif_read_data($finalPath, 'COMMENT', true);
-									if($comments) { echo "Comments: <b>" . $comments["COMMENT"][0] . "</b>"; }
+									//!$comments = exif_read_data($finalPath, 'COMMENT', true);
+									//!if($comments) { echo "Comments: <b>" . $comments["COMMENT"][0] . "</b>"; }
 								}
 								else
 								{
@@ -95,7 +95,7 @@
 
 		<form action="index.php" class="form-horizontal" method="post" id="main">
 			<input name='pageaction' id='pageaction' type='hidden' form='main' value='0'>
-			<nav class="navbar sticky-top navbar-light bg-light p-1 m-0">
+			<nav class="navbar sticky-top navbar-light bg-light p-1 m-0 shadow">
 				<h6 class="ms-1 me-2 mt-1 mb-1 mr-auto text-primary">Move To Folder</h6>
 				<?php
 					$folders_dirname = "Sorted/*";
@@ -109,7 +109,7 @@
 						}
 					else
 					{
-						echo '<button type="submit" class="btn btn-primary btn-sm m-1 shadow disabled btn-grad text-white" value="">No folders. Please + Create one.</button>';
+						echo '<button type="submit" class="btn btn-outline-danger btn-sm m-1 shadow disabled btn-grad text-black" value="">No folders. Please create one first.</button>';
 					}
 				?>
 				<div class="mx-auto"></div>
@@ -124,7 +124,7 @@
 				$images = glob($images_dirname . "*.{jpg,gif,png,jpeg}", GLOB_BRACE);
 			?>
 
-			<h6 class="ms-2 me-2 mt-1 mb-1 mr-auto text-primary d-flex">
+			<h6 class="ms-2 me-2 mt-1 mb-1 mr-auto text-primary d-flex mt-3">
 				<div class="ms-2 me-auto">Files to Sort: <b><?php echo count($images) . "</b> file(s)"; ?></div>
 				<div class="ms-auto ms-2">
 					<input type="checkbox" name="selectall" value="false" id="selectall" onclick="selectDeselectAllCheckboxes(document.getElementById('selectall').checked);">

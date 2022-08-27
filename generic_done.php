@@ -1,9 +1,9 @@
-		<nav class="nav footer position=absolute title justify-content-center mt-2">
-			<li class="nav-item text-white small m-1 ms-auto me-1">
-				<span class="deepshadow">@<?php echo date("Y"); ?> costincca.ro &ndash; All Rights Reserved</span>
-			</li>
-		</nav>	
-		
+		<nav class="navbar fixed-bottom title justify-content-center p-0">
+  			<div class="container-fluid">
+				<span class="deepshadow text-white small m-1 ms-auto me-1">@<?php echo date("Y"); ?> costincca.ro &ndash; All Rights Reserved</span>
+  			</div>
+		</nav>
+
 		<!-- https://www.osano.com/cookieconsent/download/ -->
 		<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
 		<script src="Logic/JavaScript/cookieconsent.js"></script>
